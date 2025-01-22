@@ -9,10 +9,8 @@
   "keywords": [],
   "author": "Marcos Antonio",
   "license": "ISC",
-  "dependencies": {
-    "cypress": "^13.6.2"
-  },
   "devDependencies": {
-    "chai": "^5.0.0"
+    "chai": "^5.0.0",
+    "cypress": "^14.0.0"
   }
 }
