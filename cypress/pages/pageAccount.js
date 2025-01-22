@@ -52,15 +52,18 @@ export class pageAccount
 
     clickWithdraw()
     {
+
         cy
         .get(this.weblocators.withdraw)
         .click();
+
         expect(
             cy
             .get(this.weblocators.modaltext)
             .should('be.visible')
             .and('have.text', 'Funcionalidade em desenvolvimento')
         );
+        
     }
 
     verifyBankStatement()
@@ -129,25 +132,32 @@ export class pageAccount
 
     clickTranferNow()
     {
+
         cy
         .get(this.weblocators.transfernowbuttom)
         .click();
+
     }
 
     errorMessage()
     {
+
         cy
         .get(this.weblocators.modaltext)
         .should('have.text', 'Conta inválida ou inexistente');
+
         cy
         .get(this.weblocators.closemodal)
         .click();
+
     }
 
     errorTransferMessage()
     {
+
         cy
         .get(this.weblocators.transfervalueerrormsg)
         .should('have.text', 'transferValue must be a `number` type, but the final value was: `NaN` (cast from the value `""`).');
+
     }
 }
