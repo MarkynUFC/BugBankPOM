@@ -4,11 +4,25 @@ on:
 
   pull_request: 
     branches:
-      - main 
+      - '**'
       
   push:
     branches:
-      - main 
+      - '**' 
+
+  workflow_dispatch:
+    inputs:
+      browser:
+        type: choice
+        description: "Qual navegador você vai realizar os testes"
+        required: true
+        options:
+          - chromium
+          - chrome
+          - firefox
+          - edge
+          - webkit
+          - electron
 
 jobs:
 
@@ -30,19 +44,23 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '22.x'
 
-      # Step 4: Execute tests
+      # Step 4: Execute tests with the selected browser
       - name: Cypress run
         uses: cypress-io/github-action@v6
-
+        with:
+          browser: ${{ inputs.browser }}
+      
+      # Step 5: Upload screenshots on failure
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
           path: cypress/screenshots
           if-no-files-found: ignore 
-
+          
+      # Step 6: Upload videos
       - uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
