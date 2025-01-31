@@ -36,13 +36,23 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step : Execute tests with the selected browser
+       # Step 2: Install Dependencies
+      - name: Install Dependencies
+        run: npm ci
+     
+      # Step 3: Configure node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+         node-version: '22.x'
+
+      # Step 4: Execute tests with the selected browser
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           command: npm run test:menu -- --browser=${{ github.event.inputs.browser || 'chrome' }}
       
-      # Step 3: Upload screenshots on failure
+      # Step 5: Upload screenshots on failure
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
@@ -60,14 +70,23 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step : Execute tests with the selected browser
+      # Step 2: Install Dependencies
+      - name: Install Dependencies
+        run: npm ci
+
+      # Step 3: Configure node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x'
+
+      # Step 4: Execute tests with the selected browser
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           command: npm run test:account -- --browser=${{ github.event.inputs.browser || 'chrome' }}
           
-      
-      # Step 3: Upload screenshots on failure
+      # Step 5: Upload screenshots on failure
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
