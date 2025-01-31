@@ -52,7 +52,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          command: npm run test:menu -- --browser=${{ github.event.inputs.browser || 'chrome' }} --headed --verbose
+          command: npm run test:menu -- --browser=${{ github.event.inputs.browser || 'chrome' }} --headed --quiet
 
       # Step 6: Upload screenshots on failure
       - uses: actions/upload-artifact@v4
@@ -91,7 +91,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          command: npm run test:account -- --browser=${{ github.event.inputs.browser || 'chrome' }} --headed --verbose
+          command: npm run test:account -- --browser=${{ github.event.inputs.browser || 'chrome' }} --headed --quiet
           
       # Step 6: Upload screenshots on failure
       - uses: actions/upload-artifact@v4
