@@ -11,7 +11,7 @@ describe('Teste funcional de cadastro', () => {
         registerObj.openURL();
     });
     
-    it('C01 - Conta criada com sucesso', () => {
+    it.only('C01 - Conta criada com sucesso', () => {
            
             registerObj.clickSignUp();
             registerObj.setEmail(bugbank.email);
@@ -24,7 +24,7 @@ describe('Teste funcional de cadastro', () => {
 
     });
 
-    it('C02 - Formato de email invalido', () => {
+    it.only('C02 - Formato de email invalido', () => {
     
             registerObj.clickSignUp();
             registerObj.setEmail('teste@teste');
@@ -36,7 +36,7 @@ describe('Teste funcional de cadastro', () => {
 
     })
 
-    context('C03 -  Validar campos vazios', () => {
+    context.only('C03 -  Validar campos vazios', () => {
         
         it('Campo senha vazio', () => {
             

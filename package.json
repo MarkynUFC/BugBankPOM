@@ -1,10 +1,12 @@
 {
   "name": "bugbankpom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx cypress run"
+    "test": "npx cypress run",
+    "test:menu":"npx cypress run --spec cypress/e2e/menu/*.cy.js",
+    "test:account":"npx cypress run --spec cypress/e2e/account/*.cy.js"
   },
   "keywords": [],
   "author": "Marcos Antonio",
