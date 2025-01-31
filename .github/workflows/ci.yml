@@ -1,15 +1,12 @@
 name: End-to-end tests
 
 on: 
-
   pull_request: 
     branches:
       - '**'
-      
   push:
     branches:
       - '**' 
-
   workflow_dispatch:
     inputs:
       browser:
@@ -34,9 +31,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Install Dependencies with verbose and legacy-peer-deps
+      # Step 2: Clean npm cache and Install Dependencies with verbose and legacy-peer-deps
+      - name: Clean npm cache
+        run: npm cache clean --force
+
       - name: Install Dependencies
-        run: npm ci --legacy-peer-deps --verbose
+        run: npm ci --legacy-peer-deps --verbose | tee npm-install.log
 
       # Step 3: Check Node.js and npm versions
       - name: Check Node.js and npm version
@@ -52,7 +52,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          command: npm run test:menu -- --browser=${{ github.event.inputs.browser || 'chrome' }}
+          command: npm run test:menu -- --browser=${{ github.event.inputs.browser || 'chrome' }} --headed --verbose
 
       # Step 6: Upload screenshots on failure
       - uses: actions/upload-artifact@v4
@@ -63,35 +63,40 @@ jobs:
           if-no-files-found: ignore
   
   account-test:
-
     runs-on: ubuntu-latest
-
     steps:
       
       # Step 1: Checkout Repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Install Dependencies
+      # Step 2: Clean npm cache and Install Dependencies with verbose and legacy-peer-deps
+      - name: Clean npm cache
+        run: npm cache clean --force
+
       - name: Install Dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps --verbose | tee npm-install.log
 
-      # Step 3: Configure node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
+      # Step 3: Check Node.js and npm versions
+      - name: Check Node.js and npm version
+        run: |
+          node -v
+          npm -v
 
-      # Step 4: Execute tests with the selected browser
+      # Step 4: Verify Cypress installation
+      - name: Verify Cypress installation
+        run: npx cypress verify
+
+      # Step 5: Run Cypress tests with selected browser
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          command: npm run test:account -- --browser=${{ github.event.inputs.browser || 'chrome' }}
+          command: npm run test:account -- --browser=${{ github.event.inputs.browser || 'chrome' }} --headed --verbose
           
-      # Step 5: Upload screenshots on failure
+      # Step 6: Upload screenshots on failure
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots-account
           path: cypress/screenshots
-          if-no-files-found: ignore 
+          if-no-files-found: ignore
