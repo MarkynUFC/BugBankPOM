@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx cypress run",
-    "test:menu":"npx cypress run --spec cypress/e2e/menu/*.cy.js --reporter mocha",
+    "test:menu":"npx cypress run --spec cypress/e2e/menu/*.cy.js --quiet",
     "test:account":"npx cypress run --spec cypress/e2e/account/*.cy.js"
   },
   "keywords": [],
